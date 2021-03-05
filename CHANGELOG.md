@@ -13,3 +13,7 @@
 ## [0.0.4] - 5 March 2021.
 
 * Fix demo video file.
+
+## [0.0.5] - 5 March 2021.
+
+* Fix demo video file.
