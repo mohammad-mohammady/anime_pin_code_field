@@ -5,3 +5,7 @@
 ## [0.0.2] - 5 March 2021.
 
 * Fix demo.
+
+## [0.0.3] - 5 March 2021.
+
+* Format code.

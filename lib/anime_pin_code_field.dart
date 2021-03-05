@@ -24,7 +24,8 @@ class AnimePinCodeField extends StatefulWidget {
     this.height = 60.0,
     this.inputBoxColor = Colors.white,
     this.cursorColor = Colors.red,
-    this.onSubmitClick, this.textEditingController,
+    this.onSubmitClick,
+    this.textEditingController,
   }) : super(key: key);
 
   @override
@@ -61,8 +62,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
   double _cursorHeight;
 
   /// Left and right position of cursor container.
-  double _leftCursor = 0,
-      _rightCursor;
+  double _leftCursor = 0, _rightCursor;
 
   /// Current pin code counter.
   /// min = 0, max = 4.
@@ -194,7 +194,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
                       _inputBoxWidth - (_digitsPadding + _digitsDistance + 4);
                 } else if (_currentPinCounter == 2) {
                   if (_leftCursor ==
-                      _digitsPadding + _digitsDistance + _digitsDistance &&
+                          _digitsPadding + _digitsDistance + _digitsDistance &&
                       _rightCursor !=
                           _inputBoxWidth -
                               (_digitsPadding +
@@ -213,10 +213,10 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
                       (_digitsPadding + _digitsDistance + _digitsDistance + 4);
                 } else if (_currentPinCounter == 3) {
                   if (_leftCursor ==
-                      _digitsPadding +
-                          _digitsDistance +
-                          _digitsDistance +
-                          _digitsDistance &&
+                          _digitsPadding +
+                              _digitsDistance +
+                              _digitsDistance +
+                              _digitsDistance &&
                       _rightCursor !=
                           _inputBoxWidth -
                               (_digitsPadding +
