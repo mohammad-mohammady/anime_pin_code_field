@@ -9,3 +9,7 @@
 ## [0.0.3] - 5 March 2021.
 
 * Format code.
+
+## [0.0.4] - 5 March 2021.
+
+* Fix demo video file.
