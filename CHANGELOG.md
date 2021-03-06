@@ -27,3 +27,7 @@
 * Add animation to pin code text.
 * Add autoFocus property.
 * Update demo.
+
+## [0.0.8] - 5 March 2021.
+
+* Format the code.

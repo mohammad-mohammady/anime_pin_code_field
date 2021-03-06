@@ -28,7 +28,8 @@ class AnimePinCodeField extends StatefulWidget {
     this.inputBoxColor = Colors.white,
     this.cursorColor = Colors.red,
     this.onSubmitClick,
-    this.textEditingController, this.autoFocus = true,
+    this.textEditingController,
+    this.autoFocus = true,
   }) : super(key: key);
 
   @override
@@ -490,8 +491,7 @@ class __CursorWidgetState extends State<_CursorWidget> {
           _initail = false;
         });
       });
-    }
-    else {
+    } else {
       _initail = true;
     }
   }
