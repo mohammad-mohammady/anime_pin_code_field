@@ -3,7 +3,7 @@
 Pin code field.
 a pin code field for flutter, animated and customizable pin code field with 4 digits.
 
-<img src="https://user-images.githubusercontent.com/32927238/110088697-7adf8480-7d95-11eb-9367-69051b1d4815.gif" width="32%">
+<img src="https://user-images.githubusercontent.com/32927238/110198529-7e394580-7e53-11eb-8239-7e3a8cce4d5f.gif" width="32%">
 
 | Property | Description |
 | --- | --- |
