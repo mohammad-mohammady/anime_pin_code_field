@@ -18,6 +18,9 @@ class AnimePinCodeField extends StatefulWidget {
   /// [TextEditingController] of widget;
   final TextEditingController textEditingController;
 
+  /// Auto Focus
+  final bool autoFocus;
+
   const AnimePinCodeField({
     Key key,
     this.width = 230.0,
@@ -25,7 +28,7 @@ class AnimePinCodeField extends StatefulWidget {
     this.inputBoxColor = Colors.white,
     this.cursorColor = Colors.red,
     this.onSubmitClick,
-    this.textEditingController,
+    this.textEditingController, this.autoFocus = true,
   }) : super(key: key);
 
   @override
@@ -408,7 +411,9 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
       },
       showCursor: false,
       maxLength: 4,
+      enableInteractiveSelection: false,
       textAlign: TextAlign.center,
+      autofocus: widget.autoFocus,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         counterText: '',
@@ -460,7 +465,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
 
 /// Cursor widget
 // ignore: must_be_immutable
-class _CursorWidget extends StatelessWidget {
+class _CursorWidget extends StatefulWidget {
   _CursorWidget(
       {Key key, @required this.height, @required this.color, this.number})
       : super(key: key);
@@ -470,14 +475,48 @@ class _CursorWidget extends StatelessWidget {
   int number;
 
   @override
+  __CursorWidgetState createState() => __CursorWidgetState();
+}
+
+class __CursorWidgetState extends State<_CursorWidget> {
+  bool _initail = true;
+
+  @override
+  void didUpdateWidget(covariant _CursorWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.number != null) {
+      Future.delayed(Duration(milliseconds: 150), () {
+        setState(() {
+          _initail = false;
+        });
+      });
+    }
+    else {
+      _initail = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: height / 2.7,
-      width: number == null ? 4 : null,
-      color: number == null ? color.withOpacity(.2) : Colors.transparent,
-      child: Text(
-        number == null ? '' : number.toString(),
-        style: TextStyle(color: color, fontWeight: FontWeight.bold),
+      height: widget.height / 2.7,
+      width: widget.number == null ? 4 : null,
+      color: widget.number == null
+          ? widget.color.withOpacity(.2)
+          : Colors.transparent,
+      child: AnimatedDefaultTextStyle(
+        curve: Curves.decelerate,
+        duration: Duration(milliseconds: 300),
+        style: _initail
+            ? TextStyle(
+                color: widget.color, fontWeight: FontWeight.bold, fontSize: 7)
+            : TextStyle(
+                color: widget.color, fontWeight: FontWeight.bold, fontSize: 17),
+        child: Center(
+          child: Text(
+            widget.number == null ? '' : widget.number.toString(),
+          ),
+        ),
       ),
     );
   }

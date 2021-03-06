@@ -21,3 +21,9 @@
 ## [0.0.6] - 5 March 2021.
 
 * Fix demo video file.
+
+## [0.0.7] - 5 March 2021.
+
+* Add animation to pin code text.
+* Add autoFocus property.
+* Update demo.

@@ -13,6 +13,7 @@ a pin code field for flutter, animated and customizable pin code field with 4 di
 | `cursorColor` | Color of cursor |
 | `onSubmitClick` | When user tap on submit button onSubmitClick will call  |
 | `textEditingController` | Text controller of pin code  |
+| `autoFocus` | Auto focus to field(default enabled)  |
 
 
 
