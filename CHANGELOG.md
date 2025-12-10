@@ -31,3 +31,7 @@
 ## [0.0.8] - 5 March 2021.
 
 * Format the code.
+
+## [0.0.9] - 10 December 2025.
+
+* Upgrade to null safety.

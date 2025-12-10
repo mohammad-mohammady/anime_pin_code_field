@@ -13,16 +13,16 @@ class AnimePinCodeField extends StatefulWidget {
   final Color cursorColor;
 
   /// Call when taped on submit button.
-  final Function(String pinCode) onSubmitClick;
+  final void Function(String pinCode)? onSubmitClick;
 
   /// [TextEditingController] of widget;
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
 
   /// Auto Focus
   final bool autoFocus;
 
   const AnimePinCodeField({
-    Key key,
+    Key? key,
     this.width = 230.0,
     this.height = 60.0,
     this.inputBoxColor = Colors.white,
@@ -41,11 +41,11 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
   /// Input box width and height,
   /// [_inputBoxWidth] will be 75% of [widget.width] and
   /// [_inputBoxHeight] is [widget.height].
-  double _inputBoxWidth;
-  double _inputBoxHeight;
+  late double _inputBoxWidth;
+  late double _inputBoxHeight;
 
   /// Button width will be 25% of [widget.width].
-  double _buttonWidth;
+  late double _buttonWidth;
 
   /// Button icon opacity
   double _iconOpacity = 0.0;
@@ -54,30 +54,39 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
   double _iconLeft = 0.0;
 
   /// this is (([_inputBoxWidth] / 8) * 2)
-  double _digitsDistance;
+  late double _digitsDistance;
 
   /// this is ([_inputBoxWidth] / 8)
-  double _digitsPadding;
+  late double _digitsPadding;
 
   /// values of pin code
-  int _digitOne, _digitTwo, _digitThree, _digitFour;
+  int? _digitOne, _digitTwo, _digitThree, _digitFour;
 
   /// Cursor height.
-  double _cursorHeight;
+  late double _cursorHeight;
 
   /// Left and right position of cursor container.
-  double _leftCursor = 0, _rightCursor;
+  double _leftCursor = 0;
+  late double _rightCursor;
 
   /// Current pin code counter.
   /// min = 0, max = 4.
   int _currentPinCounter = 0;
 
   /// Cursor Animation
-  AnimationController _cursorAnimationController;
-  Animation<double> _cursorAnimation;
+  late AnimationController _cursorAnimationController;
+  late Animation<double> _cursorAnimation;
+  
+  /// Internal controller if none provided
+  TextEditingController? _internalController;
+  TextEditingController get _controller => widget.textEditingController ?? _internalController!;
 
   @override
   void initState() {
+    super.initState();
+    if (widget.textEditingController == null) {
+      _internalController = TextEditingController();
+    }
     _inputBoxHeight = widget.height;
     _inputBoxWidth = widget.width * .75;
     _buttonWidth = 0;
@@ -100,8 +109,13 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
       _leftCursor = 0;
       _rightCursor = _inputBoxWidth - (_digitsPadding + 4);
     });
-
-    super.initState();
+  }
+  
+  @override
+  void dispose() {
+    _cursorAnimationController.dispose();
+    _internalController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -286,7 +300,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
     );
   }
 
-  Widget staticCursorWidget({int digit}) {
+  Widget staticCursorWidget({int? digit}) {
     return _CursorWidget(
       height: _cursorHeight,
       color: widget.cursorColor,
@@ -297,7 +311,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
   /// Main [TextField] that hide to enter numbers.
   TextField buildTextField() {
     return TextField(
-      controller: widget.textEditingController,
+      controller: _controller,
       onChanged: (text) {
         setState(() {
           switch (text.length) {
@@ -439,8 +453,7 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
       color: widget.cursorColor,
       child: InkWell(
         onTap: () {
-          if (widget.onSubmitClick != null)
-            widget.onSubmitClick('$_digitOne$_digitTwo$_digitThree$_digitFour');
+          widget.onSubmitClick?.call('$_digitOne$_digitTwo$_digitThree$_digitFour');
         },
         child: Stack(
           children: [
@@ -467,13 +480,16 @@ class _AnimePinCodeFieldState extends State<AnimePinCodeField>
 /// Cursor widget
 // ignore: must_be_immutable
 class _CursorWidget extends StatefulWidget {
-  _CursorWidget(
-      {Key key, @required this.height, @required this.color, this.number})
-      : super(key: key);
+  _CursorWidget({
+    Key? key,
+    required this.height,
+    required this.color,
+    this.number,
+  }) : super(key: key);
 
   final double height;
   final Color color;
-  int number;
+  int? number;
 
   @override
   __CursorWidgetState createState() => __CursorWidgetState();
@@ -483,7 +499,7 @@ class __CursorWidgetState extends State<_CursorWidget> {
   bool _initail = true;
 
   @override
-  void didUpdateWidget(covariant _CursorWidget oldWidget) {
+  void didUpdateWidget(_CursorWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.number != null) {
       Future.delayed(Duration(milliseconds: 150), () {
